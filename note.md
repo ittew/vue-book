@@ -1,5 +1,6 @@
 ## 技术难点分析
 #### 登录
+![登录流程](./images/login_process.58cab9a5.png)
 * 用户名密码校验
 * token生成\校验和路由过滤
 * 前端token校验和重定向
