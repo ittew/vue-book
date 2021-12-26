@@ -3,7 +3,8 @@ const multer = require('multer')
 const { UPLOAD_PATH } = require('../utils/constant')
 const Result = require('../models/Result')
 const router = express.Router()
-
+const boom = require('boom')
+const { getCategory, getBookList } = require('../service/book');
 router.post(
     '/upload',
     multer({ dest: `${UPLOAD_PATH}/book` }).single('file'),
@@ -15,4 +16,21 @@ router.post(
       }
     }
 )
+
+router.get('/getCategory', function(req, res, next) {
+    getCategory().then(category => {
+        new Result(category, '获取分类成功').success(res)
+    }).catch(err => {
+        next(boom.badImplementation(err))
+    })
+})
+
+router.get('/getBookList', function(req, res, next) {
+    getBookList(req.query).then((data) => {
+        new Result(data, '获取图书列表成功').success(res)
+    }).catch(err => {
+        next(boom.badImplementation(err))
+    })
+})
+
 module.exports = router

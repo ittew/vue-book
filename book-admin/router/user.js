@@ -43,7 +43,7 @@ router.post(
 router.get('/info', function(req, res, next) {
   const decodeToken = decode(req)
   if (decodeToken && decodeToken.username) {
-    info('admin').then(user => {
+    info(decodeToken.username).then(user => {
       if (user) {
         user.roles = [user.role]
         new Result(user, '获取用户信息成功').success(res)
