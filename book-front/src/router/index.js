@@ -87,15 +87,30 @@ export const asyncRoutes = [
 
   /** when your routing map is too long, you can split it into small modules **/
   {
+    name: 'book',
     path: '/book',
     component: Layout,
     redirect: '/book/create',
+    meta: { title: '图书管理', icon: 'documentation', roles: ['admin', 'editor'] },
     children: [
       {
         path: '/book/create',
         component: () => import('@/views/book/create'),
-        name: 'book',
+        name: 'bookCreate',
         meta: { title: '添加图书', icon: 'edit', roles: ['admin'] }
+      },
+      {
+        path: '/book/editor',
+        component: () => import('@/views/book/editor'),
+        name: 'bookEditor',
+        hidden: true,
+        meta: { title: '编辑图书', icon: 'edit', roles: ['admin'], activeMenu: '/book/list' }
+      },
+      {
+        path: '/book/list',
+        component: () => import('@/views/book/list'),
+        name: 'bookList',
+        meta: { title: '图书列表', icon: 'list', roles: ['editor'] }
       }
     ]
   },
