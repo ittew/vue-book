@@ -4,7 +4,7 @@ const { UPLOAD_PATH } = require('../utils/constant')
 const Result = require('../models/Result')
 const router = express.Router()
 const boom = require('boom')
-const { getCategory, getBookList } = require('../service/book');
+const { getCategory, getBookList, deleteBook } = require('../service/book');
 router.post(
     '/upload',
     multer({ dest: `${UPLOAD_PATH}/book` }).single('file'),
@@ -31,6 +31,20 @@ router.get('/getBookList', function(req, res, next) {
     }).catch(err => {
         next(boom.badImplementation(err))
     })
+})
+
+router.get('/deleteBook', function(req, res, next) {
+    const {fileName} = req.query
+    console.log(req.query);
+    if (!fileName) {
+        next(boom.badImplementation(new Error('参数fileName不能为空')))
+    } else {
+        deleteBook(fileName).then(() => {
+            new Result('删除图书成功').success(res)
+        }).catch(err => {
+            next(boom.badImplementation(err))
+        })
+    }
 })
 
 module.exports = router

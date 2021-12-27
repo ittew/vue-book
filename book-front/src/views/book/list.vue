@@ -41,7 +41,7 @@
         class="filter-item"
         type="primary"
         icon="el-icon-search"
-        @click="forceRefresh"
+        @click="searchBtn"
       >
         查询
       </el-button>
@@ -134,7 +134,7 @@
 import waves from '../../directive/waves'
 import Pagination from '../../components/Pagination'
 import { parseTime } from '@/utils'
-import { getCategory, getBookList } from '../../api/book'
+import { getCategory, getBookList, deleteBook } from '../../api/book'
 export default {
   directives: {
     waves
@@ -204,14 +204,12 @@ export default {
     handleCreate() {
       this.$router.push('/book/create')
     },
-    forceRefresh() {
-
-    },
     handleFilter() {
       this.getListData()
     },
-    refresh() {
-
+    searchBtn() {
+      this.listQuery.page = 1
+      this.getListData()
     },
     sortChange(data) {
       const { prop, order } = data
@@ -222,8 +220,22 @@ export default {
       }
       this.handleFilter()
     },
-    handleDelete() {
-
+    handleDelete(row) {
+      this.$confirm('此操作将永久删除该电子书, 是否继续', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteBook(row.fileName).then(res => {
+          this.$notify({
+            title: '成功',
+            message: res.msg || '删除成功',
+            type: 'success',
+            duration: 2000
+          })
+          this.handleFilter()
+        })
+      }).catch(() => {})
     }
   }
 }

@@ -15,7 +15,6 @@ async function getCategory() {
 }
 
 async function getBookList(query) {
-    console.log(query)
     const { page = 1, pageSize = 20, sort, category, title, author } = query
     const offset = (page - 1) * pageSize
     let bookSql = `select * from book`
@@ -44,7 +43,17 @@ async function getBookList(query) {
     return { list, count: count[0].count, page, pageSize } 
 }
 
+function deleteBook(fileName){
+  return new Promise((resolve, reject) => {
+    let bookSql = `delete from book where fileName='${fileName}'`
+    querySql(bookSql).then(() => {
+      resolve()
+    })
+  })
+}
+
 module.exports = {
   getCategory,
-  getBookList
+  getBookList,
+  deleteBook
 }
