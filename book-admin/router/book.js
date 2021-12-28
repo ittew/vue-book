@@ -35,9 +35,9 @@ router.get('/getBookList', function(req, res, next) {
 
 router.get('/deleteBook', function(req, res, next) {
     const {fileName} = req.query
-    console.log(req.query);
+
     if (!fileName) {
-        next(boom.badImplementation(new Error('参数fileName不能为空')))
+        next(boom.badRequest(new Error('参数fileName不能为空')))
     } else {
         deleteBook(fileName).then(() => {
             new Result('删除图书成功').success(res)

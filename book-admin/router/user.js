@@ -16,7 +16,6 @@ router.post(
     body('password').isString().withMessage('密码必须为字符!'),
   ],
   function(req, res, next) {
-    console.log(req.body);
     const err = validationResult(req)
     if (!err.isEmpty()) {
       const [{msg}] = err.errors

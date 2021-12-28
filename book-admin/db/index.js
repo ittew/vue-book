@@ -34,7 +34,6 @@ function querySql(sql) {
 function queryOne(sql) {
   return new Promise((resolve, reject) => {
     querySql(sql).then(results => {
-      console.log(results)
       if (results && results.length > 0) {
         resolve(results[0])
       } else {

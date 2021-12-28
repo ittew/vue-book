@@ -14,7 +14,6 @@ function decode(req) {
     } else {
         token = authorization
     }
-    console.log(token);
     return jwt.verify(token, PRIVATE_KEY)
 }
 

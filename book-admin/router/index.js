@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
 // 通过 userRouter 来处理 /user 路由，对路由处理进行解耦
 router.use('/user', userRouter)
 
-// 通过 userRouter 来处理 /user 路由，对路由处理进行解耦
+// 通过 bookRouter 来处理 /book 路由，对路由处理进行解耦
 router.use('/book', bookRouter)
 
 /**
